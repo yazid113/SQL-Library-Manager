@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 New Book
-  form(action="/books", method = "post")
+  form(action="/books"+book.id, method = "post")
   if(errors)
   h2.errors Oooops!
   ul.errors

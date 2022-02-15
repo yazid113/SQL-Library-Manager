@@ -60,7 +60,7 @@ router.get('/books/:id', asyncHandler(async (req, res) => {
 router.get("/books/:id", asyncHandler(async(req, res) => {
   const book = await Book.findByPk(req.params.id);
   if (book) {
-    res.render(`books/${book.id}`, { book, title: "Update Book" });
+    res.render(`update-book`, { book, title: "Update Book" });
   }
   else {
     res.sendStatus(404);
@@ -102,7 +102,7 @@ router.get("/books/:id", asyncHandler(async (req, res) => {
 }));
 
 /* Delete individual book. */
-router.post('/books/:id', asyncHandler(async (req ,res) => {
+router.post('/books/:id/delete', asyncHandler(async (req ,res) => {
   const book = await Book.findByPk(req.params.id);
   if (book) {
     await book.destroy();
