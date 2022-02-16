@@ -3,11 +3,11 @@ extends layout
 block content
   h1 #{title}
   form(action = "/books/" + book.id, method = 'post')
-  if(errors)
-  h2.errors Oooops!
-  ul.errors
-    each error in errors
-      li= error.message
+    if(errors)
+    h2.errors Oooops!
+    ul.errors
+      each error in errors
+        li= error.message
     p
         label(for='title') Title
         input#title(name='title' type='text' value=`${book.title}`)

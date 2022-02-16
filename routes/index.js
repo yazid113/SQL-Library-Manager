@@ -53,8 +53,13 @@ router.post('/books', asyncHandler(async (req, res) => {
 /* GET book detail page. */
 router.get('/books/:id', asyncHandler(async (req, res) => {
   const book = await Book.findByPk(req.params.id);
-  res.render("update-book", { book });
-}));;
+  if (book) {
+    res.render("update-book", { book, title: book.title }); 
+  } else {
+    res.render('page-not-found');
+  }
+}));
+
 
 /* Edit book form. */
 router.get("/books/:id", asyncHandler(async(req, res) => {

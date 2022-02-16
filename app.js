@@ -23,9 +23,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
+
+/* 404 handler error */
+app.use((req, res, next) => {{
+  const error = new Error();
+  error.status = 404;
+  error.message = 'The desire page is not found please try again';
+  res.render('page-not-found', {error}); 
+}
+});
+
+/* Global error handler */
+app.use((err, req, res, next) => {
+  if (err) {
+    console.log('Global error handler called', {err});
+  }
+  if (err.status === 404) {  
+    res.status(404).render('page-not-found', {err});
+  } else {
+    err.message = err.message || `Server error`;
+    res.status(err.status || 500).render('error', {err});
+  }
 });
 
 // error handler
@@ -36,7 +58,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error')
 });
 
 (async () => {
